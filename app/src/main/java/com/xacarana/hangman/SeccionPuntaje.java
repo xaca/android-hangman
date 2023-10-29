@@ -8,7 +8,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.xacarana.hangman.logica.Puntaje;
-import com.xacarana.hangman.util.Datos;
+import com.xacarana.hangman.modelo.Datos;
 
 public class SeccionPuntaje extends AppCompatActivity {
 

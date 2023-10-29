@@ -18,7 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.xacarana.hangman.logica.LogicaAhorcado;
-import com.xacarana.hangman.util.Datos;
+import com.xacarana.hangman.modelo.Datos;
 import com.xacarana.hangman.util.StringUtil;
 
 import java.util.Timer;

@@ -1,4 +1,4 @@
-package com.xacarana.hangman.util;
+package com.xacarana.hangman.modelo;
 
 import android.app.Application;
 

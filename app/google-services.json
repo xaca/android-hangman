@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "843150620523",
+    "project_id": "hangman-game-7e8da",
+    "storage_bucket": "hangman-game-7e8da.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:843150620523:android:8a350cb4338bc4fa35be2e",
+        "android_client_info": {
+          "package_name": "com.xacarana.hangman"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYXhM5vHoonwCEj_48aGJZwpQspSO7_T8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

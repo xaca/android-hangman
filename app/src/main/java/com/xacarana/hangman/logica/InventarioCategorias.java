@@ -1,5 +1,9 @@
 package com.xacarana.hangman.logica;
 
+import com.xacarana.hangman.errores.LecturaDatosException;
+import com.xacarana.hangman.firebase.DatosExternos;
+
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -8,86 +12,115 @@ import java.util.Random;
 public class InventarioCategorias {
 
     private String categorias[];
-    private String palabras[][];
+    private ArrayList<ArrayList<String>> palabras;
     private int categoria_actual;
 
     public InventarioCategorias()
     {
-        palabras = new String[6][10];
+        ArrayList<String> temp;
+        palabras = new ArrayList<ArrayList<String>>();
         //categorias = new String[] { "Actores", "Películas", "Deportes", "Frutas", "Grupos de Musica", "Países" };
 
-        palabras[0][0] = "al pacino";
-        palabras[0][1] = "arnold schwarzenegger";
-        palabras[0][2] = "sylvester stallone";
-        palabras[0][3] = "adam sandler";
-        palabras[0][4] = "uma thurman";
-        palabras[0][5] = "monica bellucci";
-        palabras[0][6] = "jim carrey";
-        palabras[0][7] = "vincent cassel";
-        palabras[0][8] = "brad pitt";
-        palabras[0][9] = "angelina jolie";
+        temp = new ArrayList<String>();
+        temp.add("al pacino");
+        temp.add("arnold schwarzenegger");
+        temp.add("sylvester stallone");
+        temp.add("adam sandler");
+        temp.add("uma thurman");
+        temp.add("monica bellucci");
+        temp.add("jim carrey");
+        temp.add("vincent cassel");
+        temp.add("brad pitt");
+        temp.add("angelina jolie");
 
-        palabras[1][0] = "matrix";
-        palabras[1][1] = "snatch";
-        palabras[1][2] = "rambo";
-        palabras[1][3] = "terminator";
-        palabras[1][4] = "los increibles";
-        palabras[1][5] = "dumbo";
-        palabras[1][6] = "madmax";
-        palabras[1][7] = "cobra";
-        palabras[1][8] = "shrek";
-        palabras[1][9] = "hercules";
+        palabras.add(temp);
 
-        palabras[2][0] = "baloncesto";
-        palabras[2][1] = "natacion";
-        palabras[2][2] = "boxeo";
-        palabras[2][3] = "billar";
-        palabras[2][4] = "tenis de mesa";
-        palabras[2][5] = "ciclismo";
-        palabras[2][6] = "balonmano";
-        palabras[2][7] = "voleibol";
-        palabras[2][8] = "lucha";
-        palabras[2][9] = "futbol";
+        temp = new ArrayList<String>();
+        temp.add("matrix");
+        temp.add("snatch");
+        temp.add("rambo");
+        temp.add("terminator");
+        temp.add("los increibles");
+        temp.add("dumbo");
+        temp.add("madmax");
+        temp.add("cobra");
+        temp.add("shrek");
+        temp.add("hercules");
 
-        palabras[3][0] = "mango";
-        palabras[3][1] = "papaya";
-        palabras[3][2] = "cereza";
-        palabras[3][3] = "fresa";
-        palabras[3][4] = "sandia";
-        palabras[3][5] = "granadilla";
-        palabras[3][6] = "coco";
-        palabras[3][7] = "guayaba";
-        palabras[3][8] = "kiwi";
-        palabras[3][9] = "uchuva";
+        palabras.add(temp);
 
-        palabras[4][0] = "blur";
-        palabras[4][1] = "nirvana";
-        palabras[4][2] = "metallica";
-        palabras[4][3] = "cafe tacuba";
-        palabras[4][4] = "soda estereo";
-        palabras[4][5] = "aterciopelados";
-        palabras[4][6] = "molotov";
-        palabras[4][7] = "dos minutos";
-        palabras[4][8] = "caifanes";
-        palabras[4][9] = "bajo fondo";
+        temp = new ArrayList<String>();
+        temp.add("baloncesto");
+        temp.add("natacion");
+        temp.add("boxeo");
+        temp.add("billar");
+        temp.add("tenis de mesa");
+        temp.add("ciclismo");
+        temp.add("balonmano");
+        temp.add("voleibol");
+        temp.add("lucha");
+        temp.add("futbol");
 
-        palabras[5][0] = "noruega";
-        palabras[5][1] = "grecia";
-        palabras[5][2] = "holanda";
-        palabras[5][3] = "españa";
-        palabras[5][4] = "nicaragua";
-        palabras[5][5] = "honduras";
-        palabras[5][6] = "rumania";
-        palabras[5][7] = "kuwait";
-        palabras[5][8] = "puerto rico";
-        palabras[5][9] = "polonia";
+        palabras.add(temp);
+
+        temp = new ArrayList<String>();
+        temp.add("mango");
+        temp.add("papaya");
+        temp.add("cereza");
+        temp.add("fresa");
+        temp.add("sandia");
+        temp.add("granadilla");
+        temp.add("coco");
+        temp.add("guayaba");
+        temp.add("kiwi");
+        temp.add("uchuva");
+
+        palabras.add(temp);
+
+        temp = new ArrayList<String>();
+        temp.add("blur");
+        temp.add("nirvana");
+        temp.add("metallica");
+        temp.add("cafe tacuba");
+        temp.add("soda estereo");
+        temp.add("aterciopelados");
+        temp.add("molotov");
+        temp.add("dos minutos");
+        temp.add("caifanes");
+        temp.add("bajo fondo");
+
+        palabras.add(temp);
+
+        temp = new ArrayList<String>();
+        temp.add("noruega");
+        temp.add("grecia");
+        temp.add("holanda");
+        temp.add("españa");
+        temp.add("nicaragua");
+        temp.add("honduras");
+        temp.add("rumania");
+        temp.add("kuwait");
+        temp.add("puerto rico");
+        temp.add("polonia");
+
+        palabras.add(temp);
+        //TODO: Realizar la logica para leer desde Firestore los datos de todas las categorias
+        //TODO: Marcar las palabras que han salido, para que no se repitan
+        try{
+            //Aca se debe pasar el id de la categoria como una constante
+            temp.addAll(DatosExternos.getPalabrasPorCategoria("paises"));
+        }
+        catch(LecturaDatosException e){
+
+        }
     }
 
     public String palabraAleatoria(int categoria){
         Random rnd = new Random();
-        int min = 0, max = palabras[0].length-1;
+        int min = 0, max = palabras.size()-1;
+        int aleatorio = rnd.nextInt((max - min) + 1) + min;
         setCategoria_actual(categoria);
-        return palabras[getCategoria_actual()][rnd.nextInt((max - min) + 1) + min];
+        return (palabras.get(getCategoria_actual())).get(aleatorio);
     }
 
     public void setCategorias(String[] categorias)
