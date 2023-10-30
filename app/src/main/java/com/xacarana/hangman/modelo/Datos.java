@@ -2,6 +2,7 @@ package com.xacarana.hangman.modelo;
 
 import android.app.Application;
 
+import com.xacarana.hangman.logica.LogicaAhorcado;
 import com.xacarana.hangman.logica.Puntaje;
 
 /**
@@ -9,6 +10,7 @@ import com.xacarana.hangman.logica.Puntaje;
  */
 public class Datos extends Application {
 
+    private LogicaAhorcado logica;
     private Puntaje puntaje;
     /*Toast.makeText(Juego.this,
     ""+getBaseContext().getResources().getDisplayMetrics().widthPixels, Toast.LENGTH_SHORT).show();*/
@@ -20,4 +22,11 @@ public class Datos extends Application {
         this.puntaje = puntaje;
     }
 
+    public LogicaAhorcado getLogica() {
+        return logica;
+    }
+
+    public void setLogica(LogicaAhorcado logica) {
+        this.logica = logica;
+    }
 }

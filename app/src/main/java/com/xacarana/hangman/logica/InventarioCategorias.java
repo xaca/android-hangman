@@ -1,7 +1,11 @@
 package com.xacarana.hangman.logica;
 
+import android.os.Debug;
+import android.util.Log;
+
 import com.xacarana.hangman.errores.LecturaDatosException;
 import com.xacarana.hangman.firebase.DatosExternos;
+import com.xacarana.hangman.util.DatosEvent;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -13,11 +17,13 @@ public class InventarioCategorias {
 
     private String categorias[];
     private ArrayList<ArrayList<String>> palabras;
+    private ArrayList<String> palabras_usadas;
     private int categoria_actual;
 
     public InventarioCategorias()
     {
         ArrayList<String> temp;
+        palabras_usadas = new ArrayList<String>();
         palabras = new ArrayList<ArrayList<String>>();
         //categorias = new String[] { "Actores", "Películas", "Deportes", "Frutas", "Grupos de Musica", "Países" };
 
@@ -91,36 +97,69 @@ public class InventarioCategorias {
 
         palabras.add(temp);
 
-        temp = new ArrayList<String>();
-        temp.add("noruega");
-        temp.add("grecia");
-        temp.add("holanda");
-        temp.add("españa");
-        temp.add("nicaragua");
-        temp.add("honduras");
-        temp.add("rumania");
-        temp.add("kuwait");
-        temp.add("puerto rico");
-        temp.add("polonia");
+        final ArrayList<String> datos_servidor;
+        datos_servidor = new ArrayList<String>();
+        datos_servidor.add("noruega");
+        datos_servidor.add("grecia");
+        datos_servidor.add("holanda");
+        datos_servidor.add("españa");
+        datos_servidor.add("nicaragua");
+        datos_servidor.add("honduras");
+        datos_servidor.add("rumania");
+        datos_servidor.add("kuwait");
+        datos_servidor.add("puerto rico");
+        datos_servidor.add("polonia");
 
-        palabras.add(temp);
         //TODO: Realizar la logica para leer desde Firestore los datos de todas las categorias
         //TODO: Marcar las palabras que han salido, para que no se repitan
-        try{
-            //Aca se debe pasar el id de la categoria como una constante
-            temp.addAll(DatosExternos.getPalabrasPorCategoria("paises"));
-        }
-        catch(LecturaDatosException e){
 
-        }
+        //Es necesario hacer esta invocación ya que la petición a Firestore es asincrona
+        DatosExternos.getPalabrasPorCategoria("paises", new DatosEvent() {
+            @Override
+            public void onDatosLeidos(ArrayList<String> datos, String error) {
+                if(error == null)
+                {
+                    Log.d("Prueba",datos.toString());
+                    //datos_servidor.addAll(datos);
+                    //palabras.add(datos_servidor);
+                }
+                else{
+                    //TODO: Controlar este error
+                    Log.d("Prueba","No se leyeron datos");
+                }
+            }
+        });
+        //Aca se debe pasar el id de la categoria como una constante
+
+
+
+
     }
 
     public String palabraAleatoria(int categoria){
+
         Random rnd = new Random();
-        int min = 0, max = palabras.size()-1;
-        int aleatorio = rnd.nextInt((max - min) + 1) + min;
+        ArrayList <String>temp;
+        int min, max, aleatorio;
+        String palabra_usada;
         setCategoria_actual(categoria);
-        return (palabras.get(getCategoria_actual())).get(aleatorio);
+        temp = (palabras.get(getCategoria_actual()));
+
+        min = 0;
+        max = temp.size()-1;
+        aleatorio = rnd.nextInt((max - min) + 1) + min;
+
+        palabra_usada = temp.remove(aleatorio);
+        palabras.set(getCategoria_actual(),temp);
+        palabras_usadas.add(palabra_usada);
+
+        System.out.println("Prueba -----------------------");
+        System.out.println("Prueba "+palabras);
+        System.out.println("Prueba "+palabras_usadas);
+        System.out.println("Prueba "+palabra_usada);
+
+        //TODO:Controlar error cuando no hay mas palabras en la categoria
+        return palabra_usada;
     }
 
     public void setCategorias(String[] categorias)

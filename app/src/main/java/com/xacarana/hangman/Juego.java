@@ -43,9 +43,19 @@ public class Juego extends AppCompatActivity implements View.OnClickListener{
         iv = (ImageView) findViewById(R.id.imageView2);
         ib = (ImageButton) findViewById(R.id.imageButton);
         iv.setImageResource(imagenes_juego[0]);
-        la = new LogicaAhorcado();
+
+        Datos datos = ((Datos)this.getApplication());
+
+        if(datos.getLogica() == null)
+        {
+            la = new LogicaAhorcado();
+            la.setCategorias(getResources().getStringArray(R.array.lista_categorias));
+            datos.setLogica(la);
+        }
+        else{
+            la = datos.getLogica();
+        }
         la.seleccionarCategoria(Integer.parseInt(getIntent().getStringExtra("categoria")));
-        la.setCategorias(getResources().getStringArray(R.array.lista_categorias));
         tv.setText(la.getNombreCategoria());
         po.setText(la.getProgresoPalabra());
         ib.setOnClickListener(new View.OnClickListener() {
@@ -56,7 +66,7 @@ public class Juego extends AppCompatActivity implements View.OnClickListener{
             }
         });
         estado_partida = LogicaAhorcado.CONTINUAR_PARTIDA;
-        la.setPuntaje(((Datos)this.getApplication()).getPuntaje());
+        la.setPuntaje(datos.getPuntaje());
         la.resetJuego();
         crearTeclado();
 
@@ -68,7 +78,7 @@ public class Juego extends AppCompatActivity implements View.OnClickListener{
         int contador  = 0, size, fuente;
         int ancho = getBaseContext().getResources().getDisplayMetrics().widthPixels;
         Button btn;
-        Log.d("XACA",""+ancho);
+
         size = 10;//ancho <= 480? 38 : 50;
         fuente = 14;// ancho <= 480?15:22;
 
