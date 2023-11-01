@@ -48,7 +48,7 @@ public class Juego extends AppCompatActivity implements View.OnClickListener{
 
         if(datos.getLogica() == null)
         {
-            la = new LogicaAhorcado();
+            la = new LogicaAhorcado(datos.getInventarioPalabras());
             la.setCategorias(getResources().getStringArray(R.array.lista_categorias));
             datos.setLogica(la);
         }

@@ -10,10 +10,10 @@ import com.xacarana.hangman.util.DatosEvent;
 import java.util.ArrayList;
 import java.util.Random;
 
-/**
- * Created by User on 25/09/2016.
- */
+;
+
 public class InventarioCategorias {
+
 
     private String categorias[];
     private ArrayList<ArrayList<String>> palabras;
@@ -110,30 +110,7 @@ public class InventarioCategorias {
         datos_servidor.add("puerto rico");
         datos_servidor.add("polonia");
 
-        //TODO: Realizar la logica para leer desde Firestore los datos de todas las categorias
-        //TODO: Marcar las palabras que han salido, para que no se repitan
-
-        //Es necesario hacer esta invocación ya que la petición a Firestore es asincrona
-        DatosExternos.getPalabrasPorCategoria("paises", new DatosEvent() {
-            @Override
-            public void onDatosLeidos(ArrayList<String> datos, String error) {
-                if(error == null)
-                {
-                    Log.d("Prueba",datos.toString());
-                    //datos_servidor.addAll(datos);
-                    //palabras.add(datos_servidor);
-                }
-                else{
-                    //TODO: Controlar este error
-                    Log.d("Prueba","No se leyeron datos");
-                }
-            }
-        });
-        //Aca se debe pasar el id de la categoria como una constante
-
-
-
-
+        palabras.add(temp);
     }
 
     public String palabraAleatoria(int categoria){
@@ -152,11 +129,6 @@ public class InventarioCategorias {
         palabra_usada = temp.remove(aleatorio);
         palabras.set(getCategoria_actual(),temp);
         palabras_usadas.add(palabra_usada);
-
-        System.out.println("Prueba -----------------------");
-        System.out.println("Prueba "+palabras);
-        System.out.println("Prueba "+palabras_usadas);
-        System.out.println("Prueba "+palabra_usada);
 
         //TODO:Controlar error cuando no hay mas palabras en la categoria
         return palabra_usada;
@@ -178,5 +150,11 @@ public class InventarioCategorias {
 
     public void setCategoria_actual(int categoria_actual) {
         this.categoria_actual = categoria_actual;
+    }
+
+    public void addCategoria(int categoria,ArrayList<String> nuevos_datos){
+        ArrayList<String> temp = palabras.get(categoria);
+        temp.addAll(nuevos_datos);
+        palabras.set(categoria,temp);
     }
 }

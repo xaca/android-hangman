@@ -18,6 +18,13 @@ public class LogicaAhorcado {
         ic = new InventarioCategorias();
     }
 
+    public LogicaAhorcado(InventarioCategorias inventario)
+    {
+        //Este constructor se crea para inicializar el inventario desde firebase
+        ps = new PalabraSecreta();
+        ic = inventario;
+    }
+
     public boolean seleccionarCategoria(int categoria)
     {
         ps.setPalabra_secreta(ic.palabraAleatoria(categoria));

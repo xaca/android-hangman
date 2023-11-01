@@ -2,6 +2,7 @@ package com.xacarana.hangman.modelo;
 
 import android.app.Application;
 
+import com.xacarana.hangman.logica.InventarioCategorias;
 import com.xacarana.hangman.logica.LogicaAhorcado;
 import com.xacarana.hangman.logica.Puntaje;
 
@@ -10,6 +11,7 @@ import com.xacarana.hangman.logica.Puntaje;
  */
 public class Datos extends Application {
 
+    private InventarioCategorias inventario_palabras;
     private LogicaAhorcado logica;
     private Puntaje puntaje;
     /*Toast.makeText(Juego.this,
@@ -28,5 +30,13 @@ public class Datos extends Application {
 
     public void setLogica(LogicaAhorcado logica) {
         this.logica = logica;
+    }
+
+    public InventarioCategorias getInventarioPalabras() {
+        return inventario_palabras;
+    }
+
+    public void setInventarioPalabras(InventarioCategorias inventario_palabras) {
+        this.inventario_palabras = inventario_palabras;
     }
 }
